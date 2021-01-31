@@ -35,16 +35,17 @@ const server = app.listen(port, () => {
 })
 
 
-app.get('/getData', function(req, res){
-    getWeatherData(baseURL, projectData.zip, API_KEY)
+app.get('/getCoord', function(req, res){
+    getDataFromGeoNames('mkari', 'Kahului')
         .then(function(response){
-            projectData.temp = response.list[0].main.temp;
-            projectData.city = response.city.name;
-            res.send(projectData)
+
+            res.send(response)
         });
     
 })
-
+//http://api.geonames.org/postalCodeSearchJSON?placename=Kahului&maxRows=10&username=mkari
+//http://api.geonames.org/weatherJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&username=mkari
+//http://api.geonames.org/findNearByWeatherJSON?lat=20.88953&lng=-156.478327&username=mkari
 app.post('/addData', addData)
 
 function addData(req, res) {
@@ -55,12 +56,26 @@ function addData(req, res) {
     res.send(projectData)
 }
 
+const getDataFromGeoNames= async (username,city)=>{
+    const url=`http://api.geonames.org/searchJSON?q=${city}&maxRows=1&username=${username}`;
+    try{
+        const response = await fetch(url)
+        const json = await response.json()
+        return {
+            lat: json.geonames[0].lat,
+            lng: json.geonames[0].lng
+        }
+    } catch(e){
+        console.log(e);
+    }
+}
+
 const getWeatherData = async(baseURL, zip=90000, API_KEY) =>{ 
     const url = baseURL + zip + '&units=imperial&appid=' + API_KEY;
     try {
         const response = await fetch(url)
         const json = await response.json()
-        return json;
+        return json
     } catch (error) {
         console.log(error);
     }   
