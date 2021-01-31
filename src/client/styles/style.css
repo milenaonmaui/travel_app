@@ -1,0 +1,92 @@
+body {
+    background: rgb(136,203,171);
+    background: linear-gradient(0deg, rgba(136,203,171,1) 0%, rgba(0,13,60,1) 100%);
+    margin: 0;
+    font-family: 'Fira Sans', sans-serif;
+    color: #fff;
+    font-size: 16px;
+}
+
+h1 {
+    font-size: 3em;
+    margin-top: 2em;
+}
+
+#app{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 4fr;  
+    height:100vh;
+    justify-content: center;
+    grid-gap: 1em;
+}
+
+.entry{
+    margin-top: 1em;
+}
+
+label{
+    display:block;
+    font-size: 1em;
+}
+
+input{
+    display:block;
+    height: 60px;
+    width: 320px;
+    font-size: 20px;
+    border: none;
+}
+
+input:invalid {
+    border: 2px solid purple;
+}
+
+button{
+    width: 400px;
+    height: 80px;
+    background: #3e63b4;
+    color: #f0d43a;
+    font-size: 1.5em;
+    border: none;
+    box-shadow: 2px 4px 5px #444;
+}
+
+input, textarea{
+    background:#22b2da;
+    color: #f0d43a;
+    font-size: 1em;
+}
+
+#entryHolder {
+    background-color: aquamarine;
+    color: rgb(19, 11, 54);
+    min-height: 50px;
+    max-width: 520px;
+    padding: 10px;
+}
+/* Reset style for HTML element on active to have no border*/
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+/* Style for Placeholder Text*/
+::placeholder { /* Firefox, Chrome, Opera */ 
+    color: #f0d43a; 
+    font-family: 'Oswald', sans-serif;
+
+} 
+  
+:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
+    color: #f0d43a; 
+    font-family: 'Oswald', sans-serif;
+
+} 
+  
+::-ms-input-placeholder { /* Microsoft Edge */ 
+    color: #f0d43a; 
+    font-family: 'Oswald', sans-serif;
+
+} 
