@@ -6,8 +6,8 @@ let tripData = JSON.parse(rawdata)
 console.log("Loaded ", tripData)
 const GEOUSER = process.env.GEOUSER;
 const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY
-const {getNextDay, getLastYear} = require('./dateFunctions.js')
-console.log(getLastYear("2021-02-02"))
+const {getNextDay, getLastYear, numDaysBetween} = require('./dateFunctions.js')
+console.log(numDaysBetween("2021-02-02", "2021-03-02"))
 
 const fetch = require('node-fetch')
 // Require Express to run server and routes
