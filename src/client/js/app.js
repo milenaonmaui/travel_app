@@ -4,19 +4,16 @@ console.log("App.js loaded")
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = month[d.getMonth()]+' '+ d.getDate()+','+ d.getFullYear();
-const button = document.getElementById('generate');
+const button = document.getElementById('getInfo');
 
 const handleSubmit = (e) => {
     console.log("In handle submit")
     e.preventDefault();
     const destCity = document.getElementById('dest').value;
     const startDate = document.getElementById('startDate').value
-    postData('/addData', {dest: destCity, start: startDate, end: startDate, weather: "sunny"})
+    postData('/tripData', {dest: destCity, start: startDate, end: startDate, weather: "sunny"})
         .then(function(response){
-            getData('/trips')
-                .then(function(data){
-                    console.log(data)
-                })
+            console.log(response)
             })
     
 }

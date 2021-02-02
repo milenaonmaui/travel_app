@@ -4,7 +4,8 @@ const fs = require('fs');
 let rawdata = fs.readFileSync('src/server/tripData.json')
 let tripData = JSON.parse(rawdata)
 console.log("Loaded ", tripData)
-const API_KEY = process.env.API_KEY
+const username = process.env.GEOUSER;
+console.log(username)
 const baseURL = 'http://api.openweathermap.org/data/2.5/forecast?zip='
 
 projectData = {zip: 90000};
@@ -53,6 +54,17 @@ app.get('/trips', (req, res) => res.send(tripData)
 //http://api.geonames.org/postalCodeSearchJSON?placename=Kahului&maxRows=10&username=mkari
 //http://api.geonames.org/weatherJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&username=mkari
 //http://api.geonames.org/findNearByWeatherJSON?lat=20.88953&lng=-156.478327&username=mkari
+
+app.post('/tripData', (req,res) => {
+    const dest = req.body.dest;
+    getDataFromGeoNames(username, dest)
+        .then(function(response){
+
+            res.send(response)
+        });
+    
+})
+
 app.post('/addData', (req, res) => {
     console.log("In addData ", req.body)
     const newTrip = {
