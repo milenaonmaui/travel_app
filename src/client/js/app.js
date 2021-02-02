@@ -1,20 +1,21 @@
 /* Global Variables */
 const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-
+console.log("App.js loaded")
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = month[d.getMonth()]+' '+ d.getDate()+','+ d.getFullYear();
 const button = document.getElementById('generate');
 
 const handleSubmit = (e) => {
+    console.log("In handle submit")
     e.preventDefault();
-    const zip = document.getElementById('zip').value;
-    const userFeelings = document.getElementById('feelings').value
-    postData('/addData', {zip: zip, date: newDate, userResponse: userFeelings})
+    const destCity = document.getElementById('dest').value;
+    const startDate = document.getElementById('startDate').value
+    postData('/addData', {dest: destCity, start: startDate, end: startDate, weather: "sunny"})
         .then(function(response){
-            getData('/getData')
+            getData('/trips')
                 .then(function(data){
-                    updateUI(data)
+                    console.log(data)
                 })
             })
     

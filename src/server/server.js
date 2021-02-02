@@ -1,5 +1,9 @@
 // Setup empty JS object to act as endpoint for all routes
-require('dotenv').config()
+require('dotenv').config();
+const fs = require('fs');
+let rawdata = fs.readFileSync('src/server/tripData.json')
+let tripData = JSON.parse(rawdata)
+console.log("Loaded ", tripData)
 const API_KEY = process.env.API_KEY
 const baseURL = 'http://api.openweathermap.org/data/2.5/forecast?zip='
 
@@ -43,18 +47,32 @@ app.get('/getCoord', function(req, res){
         });
     
 })
+
+app.get('/trips', (req, res) => res.send(tripData)
+)
 //http://api.geonames.org/postalCodeSearchJSON?placename=Kahului&maxRows=10&username=mkari
 //http://api.geonames.org/weatherJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&username=mkari
 //http://api.geonames.org/findNearByWeatherJSON?lat=20.88953&lng=-156.478327&username=mkari
-app.post('/addData', addData)
-
-function addData(req, res) {
+app.post('/addData', (req, res) => {
+    console.log("In addData ", req.body)
+    const newTrip = {
+        dest: req.body.dest,
+        start: req.body.start,
+        end: req.body.end,
+        weather: req.body.weather
+    }
+    tripData.push(newTrip);
+    let data = JSON.stringify(tripData)
+    try {
+        fs.writeFileSync('src/server/tripData.json', data);
+        console.log("File write success ", data)
+    } catch (err) {
+        console.log("Error writing to file", err.message)
+    }
     
-    projectData.zip = parseInt(req.body.zip);
-    projectData.date = req.body.date;
-    projectData.userResponse = req.body.userResponse;
-    res.send(projectData)
-}
+    res.send(tripData)
+})
+
 
 const getDataFromGeoNames= async (username,city)=>{
     const url=`http://api.geonames.org/searchJSON?q=${city}&maxRows=1&username=${username}`;
