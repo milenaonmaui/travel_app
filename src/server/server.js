@@ -4,11 +4,11 @@ const fs = require('fs');
 let rawdata = fs.readFileSync('src/server/tripData.json')
 let tripData = JSON.parse(rawdata)
 console.log("Loaded ", tripData)
-const username = process.env.GEOUSER;
-console.log(username)
-const baseURL = 'http://api.openweathermap.org/data/2.5/forecast?zip='
+const GEOUSER = process.env.GEOUSER;
+const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY
+const {getNextDay, getLastYear} = require('./dateFunctions.js')
+console.log(getLastYear("2021-02-02"))
 
-projectData = {zip: 90000};
 const fetch = require('node-fetch')
 // Require Express to run server and routes
 const express = require('express');
@@ -54,14 +54,17 @@ app.get('/trips', (req, res) => res.send(tripData)
 //http://api.geonames.org/postalCodeSearchJSON?placename=Kahului&maxRows=10&username=mkari
 //http://api.geonames.org/weatherJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&username=mkari
 //http://api.geonames.org/findNearByWeatherJSON?lat=20.88953&lng=-156.478327&username=mkari
-
+//https://api.weatherbit.io/v2.0/history/daily?lat=35.7796&lon=-78.6382&start_date=2021-01-29&end_date=2021-01-30&units=I&key=WEATHERBIT_KEY
 app.post('/tripData', (req,res) => {
     const dest = req.body.dest;
-    getDataFromGeoNames(username, dest)
-        .then(function(response){
-
-            res.send(response)
-        });
+    const startDate = req.body.start;
+    //use next day as end date since the free API historical data is limited to 1-day period
+    const lastYearStart = getLastYear(startDate)
+    const lastYearEnd = getNextDay(lastYearStart);
+    console.log("Call API with dates ", lastYearStart, lastYearEnd)
+    getDataFromGeoNames(GEOUSER, dest)
+        .then(res => getWeatherData(res.lat, res.lng, lastYearStart, lastYearEnd, WEATHERBIT_KEY))
+        .then(json => res.send(json))
     
 })
 
@@ -100,8 +103,8 @@ const getDataFromGeoNames= async (username,city)=>{
     }
 }
 
-const getWeatherData = async(baseURL, zip=90000, API_KEY) =>{ 
-    const url = baseURL + zip + '&units=imperial&appid=' + API_KEY;
+const getWeatherData = async(lat, lng, startDate, endDate, WEATHERBIT_KEY) =>{ 
+    const url = `https://api.weatherbit.io/v2.0/history/daily?lat=${lat}&lon=${lng}&start_date=${startDate}&end_date=${endDate}&units=I&key=${WEATHERBIT_KEY}`;
     try {
         const response = await fetch(url)
         const json = await response.json()

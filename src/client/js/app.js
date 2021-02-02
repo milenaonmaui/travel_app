@@ -10,8 +10,9 @@ const handleSubmit = (e) => {
     console.log("In handle submit")
     e.preventDefault();
     const destCity = document.getElementById('dest').value;
-    const startDate = document.getElementById('startDate').value
-    postData('/tripData', {dest: destCity, start: startDate, end: startDate, weather: "sunny"})
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value
+    postData('/tripData', {dest: destCity, start: startDate, end: endDate})
         .then(function(response){
             console.log(response)
             })
@@ -48,6 +49,13 @@ const getData = async(url='', data={}) => {
         console.log("Error getting data from server ", error)
 
     }
+}
+
+const getNextDay = (dateStr) => {
+    let date = new Date(dateStr);
+    let currDate = date.getDate();
+    date.setDate(currDate + 1)
+    return date.toISOString().split("T")[0]
 }
 
 const updateUI = (data={}) => {
