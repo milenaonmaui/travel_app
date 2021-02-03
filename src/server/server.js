@@ -7,7 +7,7 @@ console.log("Loaded ", tripData)
 const GEOUSER = process.env.GEOUSER;
 const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY
 const PIXABAY_API_KEY = process.env.PIXABAY_API_KEY
-const {getNextDay, getLastYear, numDaysBetween} = require('./dateFunctions.js')
+const {numDaysBetween} = require('./dateFunctions.js')
 const currentTrip = {};
 
 const fetch = require('node-fetch')
@@ -41,21 +41,8 @@ const server = app.listen(port, () => {
 })
 
 
-app.get('/getCoord', function(req, res){
-    getDataFromGeoNames('mkari', 'Kahului')
-        .then(function(response){
+app.get('/trips', (req, res) => res.send(tripData))
 
-            res.send(response)
-        });
-    
-})
-
-app.get('/trips', (req, res) => res.send(tripData)
-)
-//http://api.geonames.org/postalCodeSearchJSON?placename=Kahului&maxRows=10&username=mkari
-//http://api.geonames.org/weatherJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&username=mkari
-//http://api.geonames.org/findNearByWeatherJSON?lat=20.88953&lng=-156.478327&username=mkari
-//https://api.weatherbit.io/v2.0/history/daily?lat=35.7796&lon=-78.6382&start_date=2021-01-29&end_date=2021-01-30&units=I&key=WEATHERBIT_KEY
 app.post('/tripData', (req,res) => {
     const dest = req.body.dest;
     const startDate = req.body.start;
@@ -63,8 +50,7 @@ app.post('/tripData', (req,res) => {
     currentTrip.start = startDate;
     currentTrip.end = req.body.end;
     currentTrip.length = numDaysBetween(currentTrip.start, currentTrip.end)
-    //use next day as end date since the free API historical data is limited to 1-day period
- 
+   
     getImage(dest)
         .then(image => {
             currentTrip.image = image;
@@ -80,24 +66,17 @@ app.post('/tripData', (req,res) => {
         })       
 })
 
-app.post('/addData', (req, res) => {
-    console.log("In addData ", req.body)
-    const newTrip = {
-        dest: req.body.dest,
-        start: req.body.start,
-        end: req.body.end,
-        weather: req.body.weather
-    }
-    tripData.push(newTrip);
+app.post('/saveTrip', (req, res) => {
+    console.log("In saveTrip", req.body)
+    tripData.push(currentTrip);
     let data = JSON.stringify(tripData)
     try {
         fs.writeFileSync('src/server/tripData.json', data);
         console.log("File write success ", data)
     } catch (err) {
         console.log("Error writing to file", err.message)
-    }
-    
-    res.send(tripData)
+    }    
+    res.send(currentTrip)
 })
 
 

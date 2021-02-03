@@ -14,30 +14,30 @@
   <div id="main">
     <form id="form">
       <div class = "entry">
-        <label for="dest">Enter Destination here</label>
+        <label for="dest">Where do you want to go?</label>
         <input id="dest" placeholder="Enter city" required >
       </div>
       <div class = "entry">
-        <label for="startDate">Enter start date</label>
+        <label for="startDate">Whe do you want to leave?</label>
         <input id="startDate" placeholder="Enter date" type="date" required >
       </div>
       <div class = "entry">
-        <label for="endDate">Enter end date</label>
+        <label for="endDate">When do you want to return?</label>
         <input id="endDate" placeholder="Enter date" type="date" required >
       </div>
       <div class = "entry">
         <button id="getInfo"> Get trip info </button>
       </div>
+      
     </form>
     <div class ="entry">
-      <p> Image courtesy of <a href="https://pixabay.com/">
-            <img src="https://pixabay.com/static/img/public/medium_rectangle_a.png" alt="Pixabay">
-        </a></p>
-      <div class = "title">Most Recent Entry</div>
-      <div id = "entryHolder" >
-        <div id="date"></div>
-        <div id="temp"></div>
-        <div id="content"></div>
+      <p> Image courtesy of <a href="https://pixabay.com/">Pixabay</a></p>
+      <div class = "title">Existing trips:</div>
+      <div id = "currenTrip" >
+        <div id="heading"></div>
+        <div id="dates"></div>
+        <div id="weather"></div>
+        <button id="saveTrip"> Save Trip </button>
       </div>
     </div>
   </div>

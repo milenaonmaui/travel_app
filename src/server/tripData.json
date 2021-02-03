@@ -1,1 +1,1 @@
-[{"dest":"orlando","start":"2021-02-02","end":"2021-02-02","weather":"sunny"},{"dest":"Sofia","start":"2021-02-10","end":"2021-02-10","weather":"sunny"}]
+[{"dest":"sofia","start":"2021-02-03","end":"2021-02-10","length":7,"image":"https://pixabay.com/get/gc7bff7438f9728db89ee250fb5b7d24f65f6c053dd72652e4319996c7ba44af0890d9c6c508e4e65f8238887a4bcde2e2f91462a94965d2b989ec936c3894ecf_640.jpg","max_temp":52,"min_temp":40.3,"weather":{"icon":"c02d","code":801,"description":"Few clouds"}}]
