@@ -51,6 +51,7 @@ const postData = async(url='', data = {}) => {
 }
 
 const getTrips = async() => {
+    console.log("insode getTrips")
     const request = await fetch('/trips')
     try {
         const response = await request.json();
@@ -62,12 +63,19 @@ const getTrips = async() => {
     }
 }
 
-const getNextDay = (dateStr) => {
-    let date = new Date(dateStr);
-    let currDate = date.getDate();
-    date.setDate(currDate + 1)
-    return date.toISOString().split("T")[0]
+const updateExistingTrips = () => {
+    getTrips()
+    .then(data => data.forEach(trip => createTripCard(trip)))
 }
+
+const createTripCard = (trip) => {
+    let container = document.getElementById('trips');
+
+    let tripDiv = document.createElement("div");
+    tripDiv.innerHTML = "<div class=\"card\">"+ trip.dest +"</div>" 
+    container.appendChild(tripDiv);
+}
+
 
 const showCurrentTrip = (data={}) => {
     console.log("UI data", data)
@@ -85,6 +93,6 @@ const clearForm = () => {
 }
 
 
-object.addEventListener("load", getTrips)
+window.addEventListener('load', updateExistingTrips)
 buttonInfo.addEventListener('click', handleSubmit);
 buttonSave.addEventListener('click', handleSave)
