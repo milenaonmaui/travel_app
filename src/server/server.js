@@ -64,19 +64,20 @@ app.post('/tripData', (req,res) => {
     currentTrip.end = req.body.end;
     currentTrip.length = numDaysBetween(currentTrip.start, currentTrip.end)
     //use next day as end date since the free API historical data is limited to 1-day period
-    const lastYearStart = getLastYear(startDate)
-    const lastYearEnd = getNextDay(lastYearStart);
-    console.log("Call API with dates ", lastYearStart, lastYearEnd)
+ 
     getImage(dest)
         .then(image => {
             currentTrip.image = image;
-            res.send(currentTrip)
-        })
-        //.then(res.send(currentTrip))
-    //getDataFromGeoNames(GEOUSER, dest)
-    //    .then(res => getWeatherData(res.lat, res.lng, lastYearStart, lastYearEnd, WEATHERBIT_KEY))
-    //    .then(json => res.send(json))
-    
+            getDataFromGeoNames(GEOUSER, dest)
+            .then(coord => 
+                getWeatherData(coord.lat, coord.lng, WEATHERBIT_KEY)
+                .then(json => {
+                    currentTrip.max_temp = json.data[0].max_temp;
+                    currentTrip.min_temp = json.data[0].min_temp;
+                    currentTrip.weather = json.data[0].weather;
+                    res.send(currentTrip);
+                })) 
+        })       
 })
 
 app.post('/addData', (req, res) => {
@@ -114,8 +115,9 @@ const getDataFromGeoNames= async (username,city)=>{
     }
 }
 
-const getWeatherData = async(lat, lng, startDate, endDate, WEATHERBIT_KEY) =>{ 
-    const url = `https://api.weatherbit.io/v2.0/history/daily?lat=${lat}&lon=${lng}&start_date=${startDate}&end_date=${endDate}&units=I&key=${WEATHERBIT_KEY}`;
+const getWeatherData = async(lat, lng, WEATHERBIT_KEY) =>{ 
+    //https://api.weatherbit.io/v2.0/forecast/daily?city=Raleigh,NC&key=API_KEY
+    const url = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&units=I&key=${WEATHERBIT_KEY}`;
     try {
         const response = await fetch(url)
         const json = await response.json()
@@ -129,10 +131,8 @@ const getImage = async(dest) => {
     //https://pixabay.com/api/?key=20130794-3ea02eacf45d71ad7afb2bde0&q=Sofia&image_type=photo&pretty=true
     const url = "https://pixabay.com/api/?key="+ PIXABAY_API_KEY+"&q="+dest+ '&image_type=photo&pretty=true';
     try{
-        console.log("sending fetch to ", url)
         const response = await fetch(url)
         const json = await response.json();
-        console.log(json.hits[0].webformatURL)
         if (parseInt(json.totalHits) > 0)
             return json.hits[0].webformatURL;
         else
