@@ -6,8 +6,9 @@ let tripData = JSON.parse(rawdata)
 console.log("Loaded ", tripData)
 const GEOUSER = process.env.GEOUSER;
 const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY
+const PIXABAY_API_KEY = process.env.PIXABAY_API_KEY
 const {getNextDay, getLastYear, numDaysBetween} = require('./dateFunctions.js')
-console.log(numDaysBetween("2021-02-02", "2021-03-02"))
+const currentTrip = {};
 
 const fetch = require('node-fetch')
 // Require Express to run server and routes
@@ -58,13 +59,23 @@ app.get('/trips', (req, res) => res.send(tripData)
 app.post('/tripData', (req,res) => {
     const dest = req.body.dest;
     const startDate = req.body.start;
+    currentTrip.dest = dest;
+    currentTrip.start = startDate;
+    currentTrip.end = req.body.end;
+    currentTrip.length = numDaysBetween(currentTrip.start, currentTrip.end)
     //use next day as end date since the free API historical data is limited to 1-day period
     const lastYearStart = getLastYear(startDate)
     const lastYearEnd = getNextDay(lastYearStart);
     console.log("Call API with dates ", lastYearStart, lastYearEnd)
-    getDataFromGeoNames(GEOUSER, dest)
-        .then(res => getWeatherData(res.lat, res.lng, lastYearStart, lastYearEnd, WEATHERBIT_KEY))
-        .then(json => res.send(json))
+    getImage(dest)
+        .then(image => {
+            currentTrip.image = image;
+            res.send(currentTrip)
+        })
+        //.then(res.send(currentTrip))
+    //getDataFromGeoNames(GEOUSER, dest)
+    //    .then(res => getWeatherData(res.lat, res.lng, lastYearStart, lastYearEnd, WEATHERBIT_KEY))
+    //    .then(json => res.send(json))
     
 })
 
@@ -112,4 +123,22 @@ const getWeatherData = async(lat, lng, startDate, endDate, WEATHERBIT_KEY) =>{
     } catch (error) {
         console.log(error);
     }   
+}
+
+const getImage = async(dest) => {
+    //https://pixabay.com/api/?key=20130794-3ea02eacf45d71ad7afb2bde0&q=Sofia&image_type=photo&pretty=true
+    const url = "https://pixabay.com/api/?key="+ PIXABAY_API_KEY+"&q="+dest+ '&image_type=photo&pretty=true';
+    try{
+        console.log("sending fetch to ", url)
+        const response = await fetch(url)
+        const json = await response.json();
+        console.log(json.hits[0].webformatURL)
+        if (parseInt(json.totalHits) > 0)
+            return json.hits[0].webformatURL;
+        else
+            console.log('No hits');
+    } catch(e){
+        console.log(e);
+    }
+
 }
