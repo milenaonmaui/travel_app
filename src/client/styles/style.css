@@ -47,6 +47,17 @@ h1 {
     height: auto;
     border-radius: 0.5rem;
 }
+
+.icon {
+    display: inline-block;
+    width: 20px;
+    height: auto;
+}
+
+#weather {
+    display: flex;
+    flex-direction: row;
+}
 .summary h3 {
     color:rgb(41, 43, 128);
     font-size: 14px;

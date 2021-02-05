@@ -118,7 +118,7 @@ const showCurrentTrip = (data={}) => {
         document.getElementById('image').innerHTML = `<img class="currImage" src="${data.image}" alt=${data.dest}>`
         document.getElementById('heading').innerHTML = `<b>${data.length}-day</b> trip to <b> ${data.dest}</b>:`;
         document.getElementById('dates').innerText = `From ${data.start} to ${data.end}` ;
-        document.getElementById('weather').innerText = `Expected weather ${data.weather.description}, temperature between ${data.min_temp} and ${data.max_temp}`;
+        document.getElementById('weather').innerText = `Expected weather: ${data.weather.description}, temperature between ${data.min_temp} and ${data.max_temp}`;
         buttonSave.removeAttribute('hidden')
     }
     buttonCancel.removeAttribute('hidden')
