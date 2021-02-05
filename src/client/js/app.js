@@ -75,15 +75,14 @@ const createTripCard = (trip) => {
     tripDiv.innerHTML = 
     `<article class="card">
             <img src="${trip.image}" alt=${trip.dest}>
-            <h6> Image courtesy of <a href="https://pixabay.com/">Pixabay</a></h6>
             <div class = "summary">
-              <h4><b>My trip to ${trip.dest}</b></h4>
-              <h5>From ${trip.start} to ${trip.end}, ${trip.length} days long</h5>
+              <h3><b>My trip to ${trip.dest}</b></h3>
+              <h4>From ${trip.start} to ${trip.end}, ${trip.length} days long</h4>
               <p>Expected weather: ${trip.weather.description}</p>
               <p>Temperature between ${trip.min_temp} and ${trip.max_temp}</p>
             
             </div> 
-          </article>`
+    </article>`
     container.appendChild(tripDiv);
 }
 

@@ -8,41 +8,50 @@ body {
 
 header {
     border-bottom: 2px solid darkblue;
+    height: 2.5rem;
 }
 
 footer {
     border-top: 2px solid darkblue;
-}
-
-.container{
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: 1fr 5fr 1fr;  
-    height:100vh;
-    justify-content: center;
-    grid-gap: 1em;
+    margin-top: 10%;
+ 
 }
 
 h1 {
     font-size: 2em;
-    margin-top: 1em;
+    text-align: center;
 }
 
-.existingTrips {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 auto;
-}
-.container{
-    /*
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: 1fr 5fr 1fr; 
-    grid-gap: 1em; 
-    */
-    height:100vh;
+#existingTrips {
+    display:flex;
+    flex-direction: column;
+    width: 100%;
     justify-content: center;
-    
+    align-items: center;
+    border-top: 2px solid gray;
+}
+
+#currentTrip {
+    margin-left: 18%;
+}
+
+.summary h3 {
+    color:rgb(41, 43, 128);
+    font-size: 16px;
+}
+
+.summary h4, p {
+    padding-left: 1em;
+    font-size: 14px;
+}
+
+h2 {
+    margin-left: 18%;
+}
+#tripForm {
+    align-items: left;
+    margin-left: 18%;
+    margin-bottom: 5%;
 }
 
 .entry{
@@ -58,12 +67,20 @@ h1 {
     border-radius: 0.5rem;
 }
 
+article {
+    max-width: 80%;
+}
+
 .card img {
     display: block;
     margin: 0 auto;  
-    height: auto;
-    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
     border-radius: 0.5rem;
+}
+
+.card .summary {
+    padding: 1em;
 }
 
 label{

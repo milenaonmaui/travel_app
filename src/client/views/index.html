@@ -12,40 +12,45 @@
       <h1>My Travel Planner</h1>
     </header>
   <div id="main">
-    <form id="form">
-      <div class = "entry">
-        <div>
-          <label for="dest">Where do you want to go?</label>
-          <input id="dest" type="text" placeholder="Enter city" required >
-        </div>
-      </div>
-      <div class = "entry">
-        <div>
-          <label for="startDate">Start date</label>
-          <input id="startDate" placeholder="Enter date" type="date" required >
-        </div>
-        <div>
-          <label for="endDate">End date</label>
-          <input id="endDate" placeholder="Enter date" type="date" required >
-        </div>
-      </div>
+    <div id="tripForm">
+        <form >
+          <div class = "entry">
+            <div>
+              <label for="dest">Where do you want to go?</label>
+              <input id="dest" type="text" placeholder="Enter city" required >
+            </div>
+          </div>
+          <div class = "entry">
+            <div>
+              <label for="startDate">Start date</label>
+              <input id="startDate" placeholder="Enter date" type="date" required >
+            </div>
+            <div>
+              <label for="endDate">End date</label>
+              <input id="endDate" placeholder="Enter date" type="date" required >
+            </div>
+          </div>
 
-      <div class = "entry">
-        <button id="getInfo"> Get trip info </button>
-      </div>      
-    </form>
+          <div class = "entry">
+            <button id="getInfo"> Get trip info </button>
+          </div>      
+        </form>
+    </div>
       <div id = "currenTrip" >
         <div id="heading"></div>
         <div id="dates"></div>
         <div id="weather"></div>
         <button id="saveTrip" hidden> Save Trip </button>
       </div>  <!--currentTrip-->
+      <h2>Existing Trips:</h2>
       <div id="existingTrips">
+        
       </div>
-      <footer>
-        <p>Created by Milena Kari, student at <a href="https://www.udacity.com/course/front-end-web-developer-nanodegree--nd0011" target="_blank">Udacity Front-End Developer Nanodegree Program</a></p>
-      </footer>
+      
     </div> <!--main-->
+    <footer>
+      <p>Created by Milena Kari, student at <a href="https://www.udacity.com/course/front-end-web-developer-nanodegree--nd0011" target="_blank">Udacity Front-End Developer Nanodegree Program</a></p>
+    </footer>
   </div> <!--container-->
   
 
