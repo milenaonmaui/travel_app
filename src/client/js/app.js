@@ -51,7 +51,7 @@ const postData = async(url='', data = {}) => {
 }
 
 const getTrips = async() => {
-    console.log("insode getTrips")
+    console.log("inside getTrips")
     const request = await fetch('/trips')
     try {
         const response = await request.json();
@@ -69,10 +69,21 @@ const updateExistingTrips = () => {
 }
 
 const createTripCard = (trip) => {
-    let container = document.getElementById('trips');
+    let container = document.getElementById('existingTrips');
 
     let tripDiv = document.createElement("div");
-    tripDiv.innerHTML = "<div class=\"card\">"+ trip.dest +"</div>" 
+    tripDiv.innerHTML = 
+    `<article class="card">
+            <img src="${trip.image}" alt=${trip.dest}>
+            <h6> Image courtesy of <a href="https://pixabay.com/">Pixabay</a></h6>
+            <div class = "summary">
+              <h4><b>My trip to ${trip.dest}</b></h4>
+              <h5>From ${trip.start} to ${trip.end}, ${trip.length} days long</h5>
+              <p>Expected weather: ${trip.weather.description}</p>
+              <p>Temperature between ${trip.min_temp} and ${trip.max_temp}</p>
+            
+            </div> 
+          </article>`
     container.appendChild(tripDiv);
 }
 
@@ -82,6 +93,7 @@ const showCurrentTrip = (data={}) => {
     document.getElementById('heading').innerHTML = `<p>My <b>${data.length}-day</b> trip to <b> ${data.dest}</b>:</p>`;
     document.getElementById('dates').innerHTML = `<p>From ${data.start} to ${data.end} </p>` ;
     document.getElementById('weather').innerHTML = `<p>Expected weather ${data.weather.description}, temperature between ${data.min_temp} and ${data.max_temp}</p>`;
+    document.getElementById('saveTrip').removeAttribute('hidden')
     
 }
 

@@ -68,7 +68,9 @@ app.post('/tripData', (req,res) => {
 
 app.post('/saveTrip', (req, res) => {
     console.log("In saveTrip", req.body)
-    tripData.push(currentTrip);
+    tripData.unshift(currentTrip);
+    //show only last 5 trips
+    if (tripData.length > 5) tripData.pop();
     let data = JSON.stringify(tripData)
     try {
         fs.writeFileSync('src/server/tripData.json', data);
