@@ -93,12 +93,13 @@ const getDataFromGeoNames= async (username,city)=>{
     try{
         const response = await fetch(url)
         const json = await response.json()
-        if (json.totalResultCount) {
+        if (json.totalResultsCount) {
             return {
                 lat: json.geonames[0].lat,
                 lng: json.geonames[0].lng
             } 
         } else {
+            console.log(json)
             return {
                 error: "City not found"
             }

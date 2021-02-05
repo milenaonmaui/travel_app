@@ -14,6 +14,8 @@ const handleSubmit = (e) => {
     const destCity = document.getElementById('dest').value;
     const startDate = document.getElementById('startDate').value;
     const endDate = document.getElementById('endDate').value
+    let loader = `<img class="loading" src="./media/loader.gif" alt = "Loading">`;
+    document.getElementById('heading').innerHTML = loader;
     postData('/tripData', {dest: destCity, start: startDate, end: endDate})
         .then(function(response){
             console.log(response);
