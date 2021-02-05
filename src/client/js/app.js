@@ -92,13 +92,13 @@ const clearCurrentTrip = () => {
 
 const createTripCard = (trip) => {
     let container = document.getElementById('existingTrips');
-
+    let daysAway = numDaysBetween(newDate, trip.start)
     let tripDiv = document.createElement("div");
     tripDiv.innerHTML = 
     `<article class="card">
             <img src="${trip.image}" alt=${trip.dest}>
             <div class = "summary">
-              <h3><b>Trip to ${trip.dest}</b></h3>
+              <h3><b>Trip to ${trip.dest}</b> is ${daysAway} days away</h3>
               <h4>From ${trip.start} to ${trip.end}, ${trip.length} days long</h4>
               <p>Expected weather: ${trip.weather.description}</p>
               <p>Temperature between ${trip.min_temp} and ${trip.max_temp}</p>
@@ -132,6 +132,11 @@ const clearForm = () => {
     document.getElementById('endDate').value = '';
 }
 
+const numDaysBetween = (startDate, endDate) => {
+    const date1 = new Date(startDate);
+    const date2 = new Date(endDate)
+    return Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24)) ;
+}
 
 window.addEventListener('load', updateExistingTrips)
 buttonInfo.addEventListener('click', handleSubmit);
