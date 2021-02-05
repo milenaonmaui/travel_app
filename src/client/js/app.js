@@ -76,7 +76,7 @@ const createTripCard = (trip) => {
     `<article class="card">
             <img src="${trip.image}" alt=${trip.dest}>
             <div class = "summary">
-              <h3><b>My trip to ${trip.dest}</b></h3>
+              <h3><b>Trip to ${trip.dest}</b></h3>
               <h4>From ${trip.start} to ${trip.end}, ${trip.length} days long</h4>
               <p>Expected weather: ${trip.weather.description}</p>
               <p>Temperature between ${trip.min_temp} and ${trip.max_temp}</p>
@@ -89,9 +89,10 @@ const createTripCard = (trip) => {
 
 const showCurrentTrip = (data={}) => {
     console.log("UI data", data)
-    document.getElementById('heading').innerHTML = `<p>My <b>${data.length}-day</b> trip to <b> ${data.dest}</b>:</p>`;
-    document.getElementById('dates').innerHTML = `<p>From ${data.start} to ${data.end} </p>` ;
-    document.getElementById('weather').innerHTML = `<p>Expected weather ${data.weather.description}, temperature between ${data.min_temp} and ${data.max_temp}</p>`;
+    document.getElementById('image').innerHTML = `<img src="${data.image}" alt=${data.dest}>`
+    document.getElementById('heading').innerHTML = `<b>${data.length}-day</b> trip to <b> ${data.dest}</b>:`;
+    document.getElementById('dates').innerText = `From ${data.start} to ${data.end}` ;
+    document.getElementById('weather').innerText = `Expected weather ${data.weather.description}, temperature between ${data.min_temp} and ${data.max_temp}`;
     document.getElementById('saveTrip').removeAttribute('hidden')
     
 }
