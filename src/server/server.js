@@ -55,20 +55,26 @@ app.post('/tripData', (req,res) => {
         .then(image => {
             currentTrip.image = image;
             getDataFromGeoNames(GEOUSER, dest)
-            .then(coord => 
+            .then(coord => {
+                if (coord.error){
+                    res.send({error: coord.error})
+                }
                 getWeatherData(coord.lat, coord.lng, WEATHERBIT_KEY)
                 .then(json => {
                     currentTrip.max_temp = json.data[0].max_temp;
                     currentTrip.min_temp = json.data[0].min_temp;
                     currentTrip.weather = json.data[0].weather;
                     res.send(currentTrip);
-                })) 
+                
+                })
+            }) 
+            
         })       
 })
 
 app.post('/saveTrip', (req, res) => {
     console.log("In saveTrip", req.body)
-    tripData.unshift(currentTrip);
+    tripData.push(currentTrip);
     //show only last 5 trips
     if (tripData.length > 5) tripData.pop();
     let data = JSON.stringify(tripData)
@@ -87,9 +93,15 @@ const getDataFromGeoNames= async (username,city)=>{
     try{
         const response = await fetch(url)
         const json = await response.json()
-        return {
-            lat: json.geonames[0].lat,
-            lng: json.geonames[0].lng
+        if (json.totalResultCount) {
+            return {
+                lat: json.geonames[0].lat,
+                lng: json.geonames[0].lng
+            } 
+        } else {
+            return {
+                error: "City not found"
+            }
         }
     } catch(e){
         console.log(e);
