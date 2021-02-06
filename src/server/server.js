@@ -3,7 +3,7 @@ require('dotenv').config();
 const fs = require('fs');
 let rawdata = fs.readFileSync('src/server/tripData.json')
 let tripData = JSON.parse(rawdata)
-console.log("Loaded ", tripData)
+
 const GEOUSER = process.env.GEOUSER;
 const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY
 const PIXABAY_API_KEY = process.env.PIXABAY_API_KEY
@@ -26,12 +26,12 @@ const cors = require('cors')
 app.use(cors())
 
 // Initialize the main project folder
-app.use(express.static('src/client'))
+app.use(express.static('dist'))
 
 console.log(__dirname)
 
 app.get('/', function (req, res) {
-    res.sendFile('/client/views/index.html', { root: __dirname + '/..' })
+    res.sendFile('dist/index.html', { root: __dirname + '/..' })
 })
 
 // Setup Server

@@ -1,18 +1,21 @@
+@import 'base';
+
 body {
-    background: white;
+    background: $body-background;
     margin: 0;
-    font-family: 'Fira Sans', sans-serif;
-    color: rgb(41, 43, 128);
+    font-family: $font-stack;
+    color: $primary-color;
     font-size: 16px;
+    min-height: 100vh;
 }
 
 header {
-    border-bottom: 2px solid darkblue;
+    border-bottom: 2px solid $secondary-color;
     height: 2.5rem;
 }
 
 footer {
-    border-top: 2px solid darkblue;
+    border-top: 2px solid $secondary-color;
     margin-top: 10%;
  
 }

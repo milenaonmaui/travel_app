@@ -1,44 +1,4 @@
 
-let d = new Date();
-let newDate = month[d.getMonth()]+' '+ d.getDate()+','+ d.getFullYear();
-const buttonInfo = document.getElementById('getInfo');
-const buttonSave = document.getElementById('saveTrip');
-const buttonCancel = document.getElementById('cancelTrip');
-
-const handleSubmit = (e) => {
-    console.log("In handle submit")
-    e.preventDefault();
-    const destCity = document.getElementById('dest').value;
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value
-    let loader = `<img class="loading" src="./media/loader.gif" alt = "Loading">`;
-    document.getElementById('heading').innerHTML = loader;
-    postData('/tripData', {dest: destCity, start: startDate, end: endDate})
-        .then(function(response){
-            console.log(response);
-            showCurrentTrip(response)
-        })
-    
-}
-
-const handleSave = (e) => {
-    console.log("In handle save")
-    e.preventDefault();
-    postData('/saveTrip', {})
-        .then(function(response){
-            console.log(response);
-            createTripCard(response)
-            clearCurrentTrip()
-        })
-        
-    
-}
-
-const handleCancel = (e) => {
-    e.preventDefault();
-    clearCurrentTrip()
-}
-
 const postData = async(url='', data = {}) => {
     console.log('In postData')
     const res = await fetch(url, {
@@ -88,6 +48,8 @@ const clearCurrentTrip = () => {
 }
 
 const createTripCard = (trip) => {
+    let d = new Date();
+    let newDate = d.getMonth()+'/'+ d.getDate()+'/'+ d.getFullYear();
     let container = document.getElementById('existingTrips');
     let daysAway = numDaysBetween(newDate, trip.start)
     let tripDiv = document.createElement("div");
@@ -104,7 +66,7 @@ const createTripCard = (trip) => {
     </article>`
     container.insertBefore(tripDiv, container.firstChild)
 }
-
+getTrips
 
 const showCurrentTrip = (data={}) => {
     console.log("UI data", data)
@@ -112,10 +74,7 @@ const showCurrentTrip = (data={}) => {
         document.getElementById('heading').innerHTML = `<b>${data.error}</b>:`;
     } else {
         document.getElementById('image').innerHTML = `<img class="currImage" src="${data.image}" alt=${data.dest}>`
-        document.getElementById('heading').innerHTML = `<b>${data.length}-day</b> trip to <b> ${data.dest}</b>:`;
-        document.getElementById('dates').innerText = `From ${data.start} to ${data.end}` ;
-        document.getElementById('weather').innerText = `Expected weather: ${data.weather.description}, temperature between ${data.min_temp} and ${data.max_temp}`;
-        buttonSave.removeAttribute('hidden')
+        document.getElementById('headigetTripsidden')
     }
     buttonCancel.removeAttribute('hidden')
     
@@ -134,9 +93,15 @@ const numDaysBetween = (startDate, endDate) => {
     return Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24)) ;
 }
 
-//Event Listeners
+export {
+    postData,
+    getTrips,
+    updateExistingTrips,
+    clearCurrentTrip,
+    createTripCard,
+    showCurrentTrip,
+    clearForm,
+    numDaysBetween
+}
 
-window.addEventListener('load', updateExistingTrips)
-buttonInfo.addEventListener('click', handleSubmit);
-buttonSave.addEventListener('click', handleSave)
-buttonCancel.addEventListener('click', handleCancel)
+
