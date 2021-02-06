@@ -1,7 +1,4 @@
-/* Global Variables */
-const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-console.log("App.js loaded")
-// Create a new date instance dynamically with JS
+
 let d = new Date();
 let newDate = month[d.getMonth()]+' '+ d.getDate()+','+ d.getFullYear();
 const buttonInfo = document.getElementById('getInfo');
@@ -105,7 +102,6 @@ const createTripCard = (trip) => {
             
             </div> 
     </article>`
-    //container.appendChild(tripDiv);
     container.insertBefore(tripDiv, container.firstChild)
 }
 
@@ -137,6 +133,8 @@ const numDaysBetween = (startDate, endDate) => {
     const date2 = new Date(endDate)
     return Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24)) ;
 }
+
+//Event Listeners
 
 window.addEventListener('load', updateExistingTrips)
 buttonInfo.addEventListener('click', handleSubmit);
