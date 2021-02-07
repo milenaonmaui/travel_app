@@ -1,4 +1,6 @@
 
+import 'regenerator-runtime/runtime';
+
 const getTrips = async() => {
     console.log("inside getTrips")
     const request = await fetch('/trips')

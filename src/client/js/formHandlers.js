@@ -1,3 +1,5 @@
+import 'regenerator-runtime/runtime';
+
 function handleSubmit(e) {
     e.preventDefault();
     const destCity = document.getElementById('dest').value;

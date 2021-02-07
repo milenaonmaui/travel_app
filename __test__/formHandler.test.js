@@ -1,9 +1,8 @@
-import { handleCancel } from "../src/client/js/formHandlers"
-import 'regenerator-runtime/runtime'
+import { handleSubmit } from "../src/client/js/formHandlers"
 
-describe("Testing the cancel functionality", () => {
+describe("Testing the submit functionality", () => {
     // The test() function has two arguments - a string description, and an actual test as a callback function.  
-    test("Testing the handleCancel() function", () => {
+    test("Testing the handleSubmit() function", () => {
           
-           expect(handleCancel).toBeDefined();
+           expect(handleSubmit).toBeDefined();
 })});
