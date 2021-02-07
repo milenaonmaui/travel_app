@@ -1,22 +1,4 @@
 
-const postData = async(url='', data = {}) => {
-    console.log('In postData')
-    const res = await fetch(url, {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
-    try {
-        const newData = await res.json();
-        return newData
-    } catch(error) {
-        console.log(error)
-    }
-}
-
 const getTrips = async() => {
     console.log("inside getTrips")
     const request = await fetch('/trips')
@@ -31,7 +13,7 @@ const getTrips = async() => {
 }
 
 const updateExistingTrips = () => {
-    getTrips()
+    Client.getTrips()
     .then(data => data.forEach(trip => createTripCard(trip)))
 }
 
@@ -43,15 +25,15 @@ const clearCurrentTrip = () => {
     document.getElementById('dest').value = "";
     document.getElementById('startDate').value = "";
     document.getElementById('endDate').value = "";
-    buttonSave.setAttribute('hidden', true)
-    buttonCancel.setAttribute('hidden', true)
+    document.getElementById('saveTrip').setAttribute('hidden', true)
+    document.getElementById('cancelTrip').setAttribute('hidden', true)
 }
 
 const createTripCard = (trip) => {
     let d = new Date();
     let newDate = d.getMonth()+'/'+ d.getDate()+'/'+ d.getFullYear();
     let container = document.getElementById('existingTrips');
-    let daysAway = numDaysBetween(newDate, trip.start)
+    let daysAway = Client.numDaysBetween(newDate, trip.start)
     let tripDiv = document.createElement("div");
     tripDiv.innerHTML = 
     `<article class="card">
@@ -66,7 +48,6 @@ const createTripCard = (trip) => {
     </article>`
     container.insertBefore(tripDiv, container.firstChild)
 }
-getTrips
 
 const showCurrentTrip = (data={}) => {
     console.log("UI data", data)
@@ -74,13 +55,16 @@ const showCurrentTrip = (data={}) => {
         document.getElementById('heading').innerHTML = `<b>${data.error}</b>:`;
     } else {
         document.getElementById('image').innerHTML = `<img class="currImage" src="${data.image}" alt=${data.dest}>`
-        document.getElementById('headigetTripsidden')
+        document.getElementById('heading').innerHTML = `<b>${data.length}-day</b> trip to <b> ${data.dest}</b>:`;
+        document.getElementById('dates').innerText = `From ${data.start} to ${data.end}` ;
+        document.getElementById('weather').innerText = `Expected weather: ${data.weather.description}, temperature between ${data.min_temp} and ${data.max_temp}`;
+        document.getElementById('saveTrip').removeAttribute('hidden')
     }
-    buttonCancel.removeAttribute('hidden')
+    document.getElementById('cancelTrip').removeAttribute('hidden')
     
 }
 
-const clearForm = () => {
+function clearForm() {
     //clear entry values so user can initiate another call
     document.getElementById('dest').value = '';
     document.getElementById('startDate').value = '';
@@ -94,7 +78,6 @@ const numDaysBetween = (startDate, endDate) => {
 }
 
 export {
-    postData,
     getTrips,
     updateExistingTrips,
     clearCurrentTrip,

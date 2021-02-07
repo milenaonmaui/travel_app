@@ -6,7 +6,7 @@ body {
     font-family: $font-stack;
     color: $primary-color;
     font-size: 16px;
-    min-height: 100vh;
+   
 }
 
 header {
@@ -31,7 +31,8 @@ h1 {
     width: 100%;
     justify-content: center;
     align-items: center;
-    border-top: 2px solid gray;
+    border-top: 2px solid $secondary-color;
+    min-height: 30vh;
 }
 
 #currentTrip {

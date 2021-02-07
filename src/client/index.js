@@ -1,5 +1,4 @@
 import {
-    postData,
     getTrips,
     updateExistingTrips,
     clearCurrentTrip,
@@ -8,9 +7,10 @@ import {
     clearForm,
     numDaysBetween} from './js/app'
 
-import { handleSubmit, handleSave, handleCancel } from './js/formHandlers'
+import { handleSubmit, handleSave, handleCancel, postData } from './js/formHandlers'
 import './styles/style.scss'
 import './styles/base.scss'
+import './media/loader.gif'
 
 const buttonInfo = document.getElementById('getInfo');
 const buttonSave = document.getElementById('saveTrip');
@@ -21,3 +21,16 @@ buttonInfo.addEventListener('click', handleSubmit);
 buttonSave.addEventListener('click', handleSave)
 buttonCancel.addEventListener('click', handleCancel)
 
+export {
+    getTrips,
+    updateExistingTrips,
+    clearCurrentTrip,
+    createTripCard,
+    showCurrentTrip,
+    clearForm,
+    numDaysBetween,
+    handleSubmit, 
+    handleSave, 
+    handleCancel, 
+    postData, 
+}
