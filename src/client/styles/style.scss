@@ -138,12 +138,16 @@ input:invalid {
 button{
     width: 200px;
     height: 30px;
-    background: #5ab6f3;
+    background: $button-color;
     color: rgb(15, 15, 95);
     font-size: 0.8em;
     border: none;
     box-shadow: 2px 4px 5px #444;
     border-radius: 0.5em;
+}
+
+button:hover {
+    background-color: $button-hover;
 }
 
 .btn-small {
