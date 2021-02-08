@@ -1,4 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
+const regeneratorRuntime = require('regenerator-runtime');
 require('dotenv').config();
 const fs = require('fs');
 let rawdata = fs.readFileSync('src/server/tripData.json')
@@ -110,7 +111,7 @@ const getDataFromGeoNames= async (username,city)=>{
 }
 
 const getWeatherData = async(lat, lng, WEATHERBIT_KEY) =>{ 
-    //https://api.weatherbit.io/v2.0/forecast/daily?city=Raleigh,NC&key=API_KEY
+    
     const url = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&units=I&key=${WEATHERBIT_KEY}`;
     try {
         const response = await fetch(url)
@@ -122,7 +123,7 @@ const getWeatherData = async(lat, lng, WEATHERBIT_KEY) =>{
 }
 
 const getImage = async(dest) => {
-    //https://pixabay.com/api/?key=20130794-3ea02eacf45d71ad7afb2bde0&q=Sofia&image_type=photo&pretty=true
+    
     const url = "https://pixabay.com/api/?key="+ PIXABAY_API_KEY+"&q="+dest+ '&image_type=photo&pretty=true';
     try{
         const response = await fetch(url)
@@ -136,3 +137,5 @@ const getImage = async(dest) => {
     }
 
 }
+
+module.exports = {app}
