@@ -5,9 +5,15 @@ const fs = require('fs');
 let rawdata = fs.readFileSync('src/server/tripData.json')
 let tripData = JSON.parse(rawdata)
 
-const GEOUSER = process.env.GEOUSER;
-const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY
-const PIXABAY_API_KEY = process.env.PIXABAY_API_KEY
+//const GEOUSER = process.env.GEOUSER;
+//const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY
+//const PIXABAY_API_KEY = process.env.PIXABAY_API_KEY
+
+//API Keys exposed - for project review only
+const GEOUSER = 'mkari'
+const WEATHERBIT_KEY = '5b5a7da50c06441ba647698d21d8ba3a'
+const PIXABAY_API_KEY = '20130794-3ea02eacf45d71ad7afb2bde0'
+
 const {numDaysBetween} = require('./dateFunctions.js')
 const currentTrip = {};
 
@@ -28,8 +34,6 @@ app.use(cors())
 
 // Initialize the main project folder
 app.use(express.static('dist'))
-
-console.log(__dirname)
 
 app.get('/', function (req, res) {
     res.sendFile('dist/index.html', { root: __dirname + '/..' })
@@ -100,7 +104,6 @@ const getDataFromGeoNames= async (username,city)=>{
                 lng: json.geonames[0].lng
             } 
         } else {
-            console.log(json)
             return {
                 error: "City not found"
             }
