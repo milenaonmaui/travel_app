@@ -1,6 +1,7 @@
 
 import 'regenerator-runtime/runtime';
 
+// Load list of trips from server
 const getTrips = async() => {
     console.log("inside getTrips")
     const request = await fetch('/trips')
@@ -14,11 +15,13 @@ const getTrips = async() => {
     }
 }
 
+//Create trip card for each trip
 const updateExistingTrips = () => {
     Client.getTrips()
     .then(data => data.forEach(trip => createTripCard(trip)))
 }
 
+//Clear the diplayed current trip when the user clicks on cancel
 const clearCurrentTrip = () => {
     document.getElementById('image').innerHTML = "";
     document.getElementById('heading').innerHTML = "";
@@ -31,6 +34,7 @@ const clearCurrentTrip = () => {
     document.getElementById('cancelTrip').setAttribute('hidden', true)
 }
 
+//create trip card from trip data in json format
 const createTripCard = (trip) => {
     let d = new Date();
     let newDate = d.getMonth()+'/'+ d.getDate()+'/'+ d.getFullYear();
@@ -51,6 +55,7 @@ const createTripCard = (trip) => {
     container.insertBefore(tripDiv, container.firstChild)
 }
 
+//display the data passed to the function in json in div#currentTrip
 const showCurrentTrip = (data={}) => {
     console.log("UI data", data)
     if (data.error) {
@@ -66,13 +71,14 @@ const showCurrentTrip = (data={}) => {
     
 }
 
+//clear entry values so user can initiate another call
 function clearForm() {
-    //clear entry values so user can initiate another call
     document.getElementById('dest').value = '';
     document.getElementById('startDate').value = '';
     document.getElementById('endDate').value = '';
 }
 
+//Helper - calculate number od days between two dates
 const numDaysBetween = (startDate, endDate) => {
     const date1 = new Date(startDate);
     const date2 = new Date(endDate)

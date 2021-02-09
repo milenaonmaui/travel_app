@@ -1,5 +1,6 @@
 import 'regenerator-runtime/runtime';
 
+//handle form submit, triggered on clicking the getInfo button
 function handleSubmit(e) {
     e.preventDefault();
     const destCity = document.getElementById('dest').value;
@@ -15,8 +16,9 @@ function handleSubmit(e) {
     
 }
 
+//handle click on Save trip button, post trip data to server and create new trip card
 const handleSave = (e) => {
-    console.log("In handle save")
+
     e.preventDefault();
     Client.postData('/saveTrip', {})
         .then(function(response){
@@ -32,6 +34,7 @@ const handleCancel = (e) => {
     Client.clearCurrentTrip();
 }
 
+//post trip data to server
 const postData = async(url='', data = {}) => {
     console.log('In postData')
     const res = await fetch(url, {
