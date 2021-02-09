@@ -22,3 +22,4 @@ and launch `https://localhost:8000` in the browser. Enter city name and start an
     2. Use Local Storage to save the data so that when they close, then revisit the page, their information is still there.
     3. Instead of just pulling a single day forecast, pull the forecast for multiple days.
 
+

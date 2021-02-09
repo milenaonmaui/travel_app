@@ -7,7 +7,9 @@ const request = supertest(app)
 describe('server test', () => {
     it('Test initial load of existing trips', async done => {
         const response = await request.get('/trips')
-        expect(response.status).toBe(200)
+        expect(200)
         done()
-        });
+        })
+           
 })
+
