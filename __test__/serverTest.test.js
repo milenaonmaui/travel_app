@@ -9,7 +9,14 @@ describe('server test', () => {
         const response = await request.get('/trips')
         expect(200)
         done()
-        })
-           
-})
+        });
+        
+});
+describe("Testing the app is defined", () => {  
+    test("Testing the app functionality", () => {
+          
+           expect(app).toBeDefined();
+})});
+   
+
 
